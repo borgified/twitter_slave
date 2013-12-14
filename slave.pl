@@ -23,16 +23,14 @@ my $nt = Net::Twitter->new(
 );
 
 
-
-#my $result = $nt->update("build \#$build has finished on $worker. check it out https://gist.github.com/borgified/$gistconfig{$worker}");
-
 my $result = $nt->direct_messages;
 foreach (@$result){
-	print $_->{id};
-	print $_->{text};
+	if($_->{text} eq 'build'){
+		$nt->update("starting build $_->{id}");
+		system("/usr/bin/java -jar /home/jctong/scripts/jenkins-cli.jar -s http://jenkinsci.ingres.prv:8080/ build assimmon");
+	}
 	$nt->destroy_direct_message($_->{id});
 }
-
 
 
 if ( my $err = $@ ) {
