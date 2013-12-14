@@ -5,7 +5,6 @@ use strict;
 
 use Net::Twitter;
 use Scalar::Util 'blessed';
-use Data::Dumper;
 
 my %config = do '/secret/twitter3.config';
 
@@ -24,8 +23,11 @@ my $nt = Net::Twitter->new(
 
 
 my $result = $nt->direct_messages;
+my $ts=gmtime();
+print "$ts checking for commands\n";
 foreach (@$result){
 	if($_->{text} =~ /\b[Bb]uild\b/){
+		print "$ts starting build $_->{id}\n";
 		$nt->update("starting build $_->{id}");
 		$nt->destroy_direct_message($_->{id});
 		system("/usr/bin/java -jar /home/jctong/scripts/jenkins-cli.jar -s http://jenkinsci.ingres.prv:8080/ build assimmon");
