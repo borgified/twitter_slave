@@ -25,7 +25,7 @@ my $nt = Net::Twitter->new(
 
 my $result = $nt->direct_messages;
 foreach (@$result){
-	if($_->{text} eq 'build'){
+	if($_->{text} =~ /\b[Bb]uild\b/){
 		$nt->update("starting build $_->{id}");
 		$nt->destroy_direct_message($_->{id});
 		system("/usr/bin/java -jar /home/jctong/scripts/jenkins-cli.jar -s http://jenkinsci.ingres.prv:8080/ build assimmon");
