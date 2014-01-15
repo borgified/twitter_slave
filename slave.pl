@@ -14,6 +14,7 @@ my $token			= $config{token};
 my $token_secret		= $config{token_secret};
 
 my $nt = Net::Twitter->new(
+	ssl									=> 1,
 	traits							=> [qw/API::RESTv1_1/],
 	consumer_key        => $consumer_key,
 	consumer_secret     => $consumer_secret,
