@@ -42,5 +42,9 @@ if ( my $err = $@ ) {
 	warn "HTTP Response Code: ", $err->code, "\n",
 	"HTTP Message......: ", $err->message, "\n",
 	"Twitter error.....: ", $err->error, "\n";
+	$nt->update("http response code: $err->code");
+	$nt->update("http mesg: $err->message");
+	$nt->update("twitter error: $err->error");
+
 }
 
