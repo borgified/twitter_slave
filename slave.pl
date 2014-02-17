@@ -27,11 +27,11 @@ my $result = $nt->direct_messages;
 my $ts=gmtime();
 print "$ts checking for commands\n";
 foreach (@$result){
-	if($_->{text} =~ /\b[Bb]uild\b/){
+	if($_->{text} =~ /\b[Bb]uild\b (\w+)/){
 		print "$ts starting build $_->{id}\n";
 		$nt->update("starting build $_->{id}");
 		$nt->destroy_direct_message($_->{id});
-		system("/usr/bin/java -jar /home/jctong/scripts/jenkins-cli.jar -s http://jenkinsci.ingres.prv:8080/ build assimmon");
+		system("/usr/bin/java -jar /home/jctong/scripts/jenkins-cli.jar -s http://jenkinsci.ingres.prv:8080/ build assimmon  -p VERSION=$1");
 	}
 }
 
