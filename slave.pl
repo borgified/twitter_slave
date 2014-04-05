@@ -28,26 +28,17 @@ my $ts=gmtime();
 print "$ts checking for commands\n";
 foreach (@$result){
 	if($_->{text} =~ /^[Bb]uild$/){
-		print "$ts starting ubuntu tip build $_->{id}\n";
+		print "$ts starting tip build $_->{id}\n";
 		$nt->update("starting ubuntu tip build $_->{id}");
 		$nt->destroy_direct_message($_->{id});
 		system("/usr/bin/java -jar /home/jctong/scripts/jenkins-cli.jar -s http://jenkinsci.ingres.prv:8080/ build assimmon  -p VERSION=tip");
+		system("/usr/bin/java -jar /home/jctong/scripts/jenkins-cli.jar -s http://jenkinsci.ingres.prv:8080/ build assimmon-centos  -p VERSION=tip");
 	
-	}elsif($_->{text} =~ /\b[Bb]uild\b (\w+)/){
-		print "$ts starting ubuntu rev $1 build $_->{id}\n";
+	}else($_->{text} =~ /\b[Bb]uild\b (\w+)/){
+		print "$ts starting rev $1 build $_->{id}\n";
 		$nt->update("starting ubuntu rev $1 build $_->{id}");
 		$nt->destroy_direct_message($_->{id});
 		system("/usr/bin/java -jar /home/jctong/scripts/jenkins-cli.jar -s http://jenkinsci.ingres.prv:8080/ build assimmon  -p VERSION=$1");
-	}elsif($_->{text} =~ /^[Cc]uild$/){
-		print "$ts starting centos tip build $_->{id}\n";
-		$nt->update("starting centos tip build $_->{id}");
-		$nt->destroy_direct_message($_->{id});
-		system("/usr/bin/java -jar /home/jctong/scripts/jenkins-cli.jar -s http://jenkinsci.ingres.prv:8080/ build assimmon-centos  -p VERSION=tip");
-	
-	}elsif($_->{text} =~ /\b[Cc]uild\b (\w+)/){
-		print "$ts starting centos rev $1 build $_->{id}\n";
-		$nt->update("starting centos rev $1 build $_->{id}");
-		$nt->destroy_direct_message($_->{id});
 		system("/usr/bin/java -jar /home/jctong/scripts/jenkins-cli.jar -s http://jenkinsci.ingres.prv:8080/ build assimmon-centos  -p VERSION=$1");
 	}
 }
