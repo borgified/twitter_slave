@@ -34,7 +34,7 @@ foreach (@$result){
 		system("/usr/bin/java -jar /home/jctong/scripts/jenkins-cli.jar -s http://jenkinsci.ingres.prv:8080/ build assimmon  -p VERSION=tip");
 		system("/usr/bin/java -jar /home/jctong/scripts/jenkins-cli.jar -s http://jenkinsci.ingres.prv:8080/ build assimmon-centos  -p VERSION=tip");
 	
-	}else($_->{text} =~ /\b[Bb]uild\b (\w+)/){
+	}elsif($_->{text} =~ /\b[Bb]uild\b (\w+)/){
 		print "$ts starting rev $1 build $_->{id}\n";
 		$nt->update("starting ubuntu rev $1 build $_->{id}");
 		$nt->destroy_direct_message($_->{id});
