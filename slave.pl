@@ -24,7 +24,7 @@ my $nt = Net::Twitter->new(
 
 
 my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime();
-my $folder = sprintf("%d-%d-%d_%d-%d-%d",$year,$mon,$mday,$hour,$min,$sec);
+my $folder = sprintf("%d-%d-%d_%d-%d-%d",$year+1900,$mon,$mday,$hour,$min,$sec);
 
 
 my $result = $nt->direct_messages;
